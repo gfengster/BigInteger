@@ -95,6 +95,56 @@ public class BigData implements Entry<Integer, BigData> {
 		return ret;
 	}
 	
+	public BigData minus(BigData other) {
+		int borrow = 0;
+		
+		int v = value - other.value;
+		if (v < 0) {
+			v = v + BASE;
+			borrow = 1;
+		}
+				
+		final BigData ret = new BigData(v);
+		BigData data = ret;
+		
+		BigData myNext = next;
+		BigData oNext = other.next;
+		
+		while (myNext != null && oNext != null) {
+			v = borrow;
+			
+			v = myNext.value - oNext.value - borrow;
+			myNext = myNext.next;
+			oNext = oNext.next;
+			
+			if (v < 0) {
+				v = v + BASE;
+				borrow = 1;
+			} else 
+				borrow = 0;
+			
+			data = add(data, v);
+		}
+		
+		while (myNext != null) {
+			v = myNext.value - borrow;
+			myNext = myNext.next;
+			
+			if (v < 0) {
+				v = v + BASE;
+				borrow = 1;
+			} else 
+				borrow = 0;
+			
+			data = add(data, v);
+		}
+		
+		if (borrow > 0)
+			data.value -= BASE;
+		
+		return ret;
+	}
+	
 	private BigData add(BigData data, int v) {
 		final BigData nNext = new BigData(v);
 		
@@ -105,12 +155,17 @@ public class BigData implements Entry<Integer, BigData> {
 	
 	@Override
 	public String toString(){
-		final StringBuilder ret = new StringBuilder(String.valueOf(value));
+		StringBuilder ret = new StringBuilder(String.valueOf(value));
 		BigData n = next;
 		
 		while(n != null) {
 			ret.append(n.value);
 			n = n.next;
+		}
+		
+		if (ret.charAt(0) == '-') {
+			ret.deleteCharAt(0);
+			ret.append('-');
 		}
 		
 		return ret.reverse().toString();

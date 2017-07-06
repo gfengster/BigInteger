@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class BigDataTest {
 
-	@Test
+	//@Test
 	public void build1Test() {
 		long value = 65123;
 
@@ -24,7 +24,7 @@ public class BigDataTest {
 		assertEquals(value, Long.parseLong(data.toString()));
 	}
 
-	@Test
+	//@Test
 	public void addTest() {
 		long value1 = 19528l;
 		long value2 = 23222923l;
@@ -57,7 +57,7 @@ public class BigDataTest {
 		assertEquals(value1 + value2, Long.parseLong(data.toString()));
 	}
 	
-	@Test
+	//@Test
 	public void build2Test() {
 		long value = Long.MAX_VALUE;
 
@@ -71,7 +71,7 @@ public class BigDataTest {
 		assertEquals("9223372036854775906", data.toString());
 	}
 	
-	@Test
+	//@Test
 	public void build3Test() {
 		long value = Long.MAX_VALUE;
 
@@ -83,7 +83,7 @@ public class BigDataTest {
 		assertEquals("18446744073709551614", data.toString());
 	}
 	
-	@Test
+	//@Test
 	public void reverseTest() throws IOException {
 		long value = Long.MAX_VALUE;
 
@@ -98,5 +98,29 @@ public class BigDataTest {
 		file.flush();
 		
 		file.close();
+	}
+	
+	@Test
+	public void minusTest() {
+		long value1 = 6l;
+		long value2 = 9l;
+
+		BigData data1 = BigData.build(value1);
+		BigData data2 = BigData.build(value2);
+
+		BigData data = data1.minus(data2);
+
+		assertEquals(value1 - value2, Long.parseLong(data.toString()));
+		
+		
+		value1 = 116l;
+		value2 = 99l;
+
+		data1 = BigData.build(value1);
+		data2 = BigData.build(value2);
+
+		data = data1.minus(data2);
+
+		assertEquals(value1 - value2, Long.parseLong(data.toString()));
 	}
 }
