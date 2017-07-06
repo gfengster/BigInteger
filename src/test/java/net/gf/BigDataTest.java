@@ -113,8 +113,8 @@ public class BigDataTest {
 		assertEquals(value1 - value2, Long.parseLong(data.toString()));
 		
 		
-		value1 = 116l;
-		value2 = 99l;
+		value1 = 126l;
+		value2 = 89l;
 
 		data1 = BigData.build(value1);
 		data2 = BigData.build(value2);

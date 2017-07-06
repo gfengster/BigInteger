@@ -125,10 +125,23 @@ public class BigData implements Entry<Integer, BigData> {
 			
 			data = add(data, v);
 		}
-		
+				
 		while (myNext != null) {
 			v = myNext.value - borrow;
 			myNext = myNext.next;
+			
+			if (v < 0) {
+				v = v + BASE;
+				borrow = 1;
+			} else 
+				borrow = 0;
+			
+			data = add(data, v);
+		}
+		
+		while (oNext != null) {
+			v = 0 - oNext.value - borrow;
+			oNext = oNext.next;
 			
 			if (v < 0) {
 				v = v + BASE;
